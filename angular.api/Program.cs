@@ -1,4 +1,4 @@
-using angular.api.DTOs;
+using angular.api.Data;
 using angular.api.Endpoints;
 
 
@@ -6,6 +6,9 @@ using angular.api.Endpoints;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddValidation();
+
+var connString = "Data Source=ProductStore.db";
+builder.Services.AddSqlite<ProductStoreContext>(connString);
 
 var app = builder.Build();
 // where we configurte the http request pipeline
