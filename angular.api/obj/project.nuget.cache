@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ve4qfmnh1Hk=",
+  "dgSpecHash": "HRBzTJ2TerE=",
   "success": true,
-  "projectFilePath": "C:\\sites\\learning\\learn-dotNet\\angular.api\\angular.api.csproj",
+  "projectFilePath": "c:\\sites\\learning\\learn-dotNet\\angular.api\\angular.api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ender\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\ender\\.nuget\\packages\\microsoft.build.framework\\18.0.2\\microsoft.build.framework.18.0.2.nupkg.sha512",

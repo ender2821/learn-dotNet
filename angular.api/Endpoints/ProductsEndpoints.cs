@@ -1,4 +1,6 @@
+using angular.api.Data;
 using angular.api.DTOs;
+using angular.api.Models;
 
 namespace angular.api.Endpoints;
 
@@ -55,22 +57,32 @@ public static class ProductsEndpoints
 
 
     // POST /products
-    group.MapPost("/", (CreateProductDto newProduct) =>
+    group.MapPost("/", (CreateProductDto newProduct, ProductStoreContext dbContext) =>
     {
+      Product product = new()
+      {
+        Name = newProduct.Name,
+        CategoryId = newProduct.CategoryId,
+        Description = newProduct.Description,
+        Price = newProduct.Price,
+        DiscountPrice = newProduct.DiscountPrice,
+        ReleaseDate = newProduct.ReleaseDate
+      };
 
-      ProductDto product = new ProductDto(
-        products.Count + 1,
-        newProduct.Name,
-        newProduct.Category,
-        newProduct.Description,
-        newProduct.Price,
-        newProduct.DiscountPrice,
-        newProduct.ReleaseDate
+      dbContext.Products.Add(product);
+      dbContext.SaveChanges();
+
+      ProductDetailsDto productDto = new(
+        product.Id,
+        product.Name,
+        product.CategoryId,
+        product.Description,
+        product.Price,
+        product.DiscountPrice,
+        product.ReleaseDate
       );
 
-      products.Add(product);
-
-      return Results.CreatedAtRoute(GetProductEndpointName, new { id = product.Id }, product);
+      return Results.CreatedAtRoute(GetProductEndpointName, new { id = productDto.Id }, productDto);
     });
 
     // Put /products/1

@@ -9,7 +9,7 @@ public class Product
   public Category? Category { get; set; }
   // Category Id is used here so we don't have to load the entire Category object when we just need the Id. 
   // This is a common practice in database design to avoid unnecessary data loading and improve performance.
-  public int? CategoryId { get; set; }
+  public int CategoryId { get; set; }
   public decimal Price { get; set; }
   public decimal? DiscountPrice { get; set; }
   public DateOnly ReleaseDate { get; set; }
