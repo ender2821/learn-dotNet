@@ -12,6 +12,7 @@ public static class ProductsEndpoints
     new ProductDto(
       1,
       "Product 1",
+      "Category 1",
       "Description 1",
       10.99m,
       8.00m,
@@ -20,6 +21,7 @@ public static class ProductsEndpoints
     new ProductDto(
       2,
       "Product 2",
+      "Category 2",
       "Description 2",
       20.00m,
       null,
@@ -28,6 +30,7 @@ public static class ProductsEndpoints
     new ProductDto(
       3,
       "Product 3",
+      "Category 2",
       "Description 3",
       30.00m,
       25.99m,
@@ -58,6 +61,7 @@ public static class ProductsEndpoints
       ProductDto product = new ProductDto(
         products.Count + 1,
         newProduct.Name,
+        newProduct.Category,
         newProduct.Description,
         newProduct.Price,
         newProduct.DiscountPrice,
@@ -84,6 +88,7 @@ public static class ProductsEndpoints
       products[index] = new ProductDto(
         id,
         updatedProduct.Name,
+        updatedProduct.Category,
         updatedProduct.Description,
         updatedProduct.Price,
         updatedProduct.DiscountPrice,

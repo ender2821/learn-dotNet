@@ -8,6 +8,7 @@ namespace angular.api.DTOs;
 public record ProductDto(
   int Id,
   string Name,
+  string Category,
   string Description,
   decimal Price,
   decimal? DiscountPrice,
