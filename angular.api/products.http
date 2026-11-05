@@ -9,10 +9,11 @@ POST http://localhost:5283/products
 Content-Type: application/json
 
 {
-  "name": "New Product",
-  "description": "This is a new product.",
-  "price": 19.99,
-  "discountPrice": 14.99, 
+  "name": "Fujifilm XT30",
+  "description": "A compact mirrorless camera with excellent image quality.",
+  "categoryId": 1,
+  "price": 419.99,
+  "discountPrice": 414.99, 
   "releaseDate": "2024-06-01"
 }
 

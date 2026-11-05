@@ -47,17 +47,27 @@ public static class ProductsEndpoints
     group.MapGet("/", () => products);
 
     // GET /products/1
-    group.MapGet("/{id}", (int id) =>
+    group.MapGet("/{id}", async (int id, ProductStoreContext dbContext) =>
     {
-      var product = products.Find(product => product.Id == id);
+      var product = await dbContext.Products.FindAsync(id);
 
-      return product is null ? Results.NotFound() : Results.Ok(product);
+      return product is null ? Results.NotFound() : Results.Ok(
+        new ProductDetailsDto(
+          product.Id,
+          product.Name,
+          product.CategoryId,
+          product.Description,
+          product.Price,
+          product.DiscountPrice,
+          product.ReleaseDate
+        )
+      );
     })
-      .WithName(GetProductEndpointName);
+    .WithName(GetProductEndpointName);
 
 
     // POST /products
-    group.MapPost("/", (CreateProductDto newProduct, ProductStoreContext dbContext) =>
+    group.MapPost("/", async (CreateProductDto newProduct, ProductStoreContext dbContext) =>
     {
       Product product = new()
       {
@@ -70,7 +80,7 @@ public static class ProductsEndpoints
       };
 
       dbContext.Products.Add(product);
-      dbContext.SaveChanges();
+      await dbContext.SaveChangesAsync();
 
       ProductDetailsDto productDto = new(
         product.Id,

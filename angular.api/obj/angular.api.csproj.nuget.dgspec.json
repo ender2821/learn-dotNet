@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\sites\\learning\\learn-dotNet\\angular.api\\angular.api.csproj": {}
+    "C:\\sites\\learning\\learn-dotNet\\angular.api\\angular.api.csproj": {}
   },
   "projects": {
-    "c:\\sites\\learning\\learn-dotNet\\angular.api\\angular.api.csproj": {
+    "C:\\sites\\learning\\learn-dotNet\\angular.api\\angular.api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\sites\\learning\\learn-dotNet\\angular.api\\angular.api.csproj",
+        "projectUniqueName": "C:\\sites\\learning\\learn-dotNet\\angular.api\\angular.api.csproj",
         "projectName": "angular.api",
-        "projectPath": "c:\\sites\\learning\\learn-dotNet\\angular.api\\angular.api.csproj",
+        "projectPath": "C:\\sites\\learning\\learn-dotNet\\angular.api\\angular.api.csproj",
         "packagesPath": "C:\\Users\\ender\\.nuget\\packages\\",
-        "outputPath": "c:\\sites\\learning\\learn-dotNet\\angular.api\\obj\\",
+        "outputPath": "C:\\sites\\learning\\learn-dotNet\\angular.api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ender\\AppData\\Roaming\\NuGet\\NuGet.Config",
