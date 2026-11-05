@@ -41,7 +41,7 @@ public static class ProductsEndpoints
     // GET /products
     group.MapGet("/", () => products);
 
-    // Get /products/1
+    // GET /products/1
     group.MapGet("/{id}", (int id) =>
     {
       var product = products.Find(product => product.Id == id);
@@ -54,6 +54,7 @@ public static class ProductsEndpoints
     // POST /products
     group.MapPost("/", (CreateProductDto newProduct) =>
     {
+
       ProductDto product = new ProductDto(
         products.Count + 1,
         newProduct.Name,
