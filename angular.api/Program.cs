@@ -15,4 +15,6 @@ var app = builder.Build();
 
 app.MapProductsEndpoints();
 
+app.MigrateDatabase();
+
 app.Run();
