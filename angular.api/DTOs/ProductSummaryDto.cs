@@ -5,7 +5,7 @@ namespace angular.api.DTOs;
 // In this case, the ProductDto class is used to represent a product in the application and transfer its data between the API the client.
 
 // We use a Record type here because it is a simple data container that is immutable and has value-based equality semantics.
-public record ProductDto(
+public record ProductSummaryDto(
   int Id,
   string Name,
   string Category,

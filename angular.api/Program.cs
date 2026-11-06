@@ -12,6 +12,7 @@ var app = builder.Build();
 // where we configurte the http request pipeline
 
 app.MapProductsEndpoints();
+app.MapCategoryEndpoints();
 
 app.MigrateDatabase();
 

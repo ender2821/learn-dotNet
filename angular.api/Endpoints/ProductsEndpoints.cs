@@ -1,6 +1,7 @@
 using angular.api.Data;
 using angular.api.DTOs;
 using angular.api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace angular.api.Endpoints;
 
@@ -9,42 +10,58 @@ public static class ProductsEndpoints
 
   const string GetProductEndpointName = "GetProduct";
 
-  private static readonly List<ProductDto> products =
-  [
-    new ProductDto(
-      1,
-      "Product 1",
-      "Category 1",
-      "Description 1",
-      10.99m,
-      8.00m,
-      new DateOnly(2023, 1, 1)
-    ),
-    new ProductDto(
-      2,
-      "Product 2",
-      "Category 2",
-      "Description 2",
-      20.00m,
-      null,
-      new DateOnly(2023, 2, 1)
-    ),
-    new ProductDto(
-      3,
-      "Product 3",
-      "Category 2",
-      "Description 3",
-      30.00m,
-      25.99m,
-      new DateOnly(2023, 3, 1)
-    )
-  ];
+  // This is a mock database we used to build out the endpoints before the database was setup
+
+  // private static readonly List<ProductSummaryDto> products =
+  // [
+  //   new ProductSummaryDto(
+  //     1,
+  //     "Product 1",
+  //     "Category 1",
+  //     "Description 1",
+  //     10.99m,
+  //     8.00m,
+  //     new DateOnly(2023, 1, 1)
+  //   ),
+  //   new ProductSummaryDto(
+  //     2,
+  //     "Product 2",
+  //     "Category 2",
+  //     "Description 2",
+  //     20.00m,
+  //     null,
+  //     new DateOnly(2023, 2, 1)
+  //   ),
+  //   new ProductSummaryDto(
+  //     3,
+  //     "Product 3",
+  //     "Category 2",
+  //     "Description 3",
+  //     30.00m,
+  //     25.99m,
+  //     new DateOnly(2023, 3, 1)
+  //   )
+  // ];
 
   public static void MapProductsEndpoints(this WebApplication app)
   {
     var group = app.MapGroup("/products");
     // GET /products
-    group.MapGet("/", () => products);
+    group.MapGet("/", async (ProductStoreContext dbContext)
+    => await dbContext.Products
+    // Include the Category navigation property to load the related Category data for each Product.
+    .Include(product => product.Category)
+    .Select(product => new ProductSummaryDto(
+        product.Id,
+        product.Name,
+        product.Category!.Name,
+        product.Description,
+        product.Price,
+        product.DiscountPrice,
+        product.ReleaseDate
+    ))
+    .AsNoTracking()
+    .ToListAsync());
 
     // GET /products/1
     group.MapGet("/{id}", async (int id, ProductStoreContext dbContext) =>
@@ -96,35 +113,34 @@ public static class ProductsEndpoints
     });
 
     // Put /products/1
-    group.MapPut("/{id}", (int id, UpdateProductDto updatedProduct) =>
+    group.MapPut("/{id}", async (int id, UpdateProductDto updatedProduct, ProductStoreContext dbContext) =>
     {
-      var index = products.FindIndex(product => product.Id == id);
+      var existingProduct = await dbContext.Products.FindAsync(id);
 
       // This list is just a mock database, so we don't have to worry about concurrency issues or anything like that.
       // In a real application, you would want to handle this more gracefully.
-      if (index == -1)
+      if (existingProduct is null)
       {
         return Results.NotFound();
       }
 
-      products[index] = new ProductDto(
-        id,
-        updatedProduct.Name,
-        updatedProduct.Category,
-        updatedProduct.Description,
-        updatedProduct.Price,
-        updatedProduct.DiscountPrice,
-        updatedProduct.ReleaseDate
-      );
+      existingProduct.Name = updatedProduct.Name;
+      existingProduct.CategoryId = updatedProduct.CategoryId;
+      existingProduct.Description = updatedProduct.Description;
+      existingProduct.Price = updatedProduct.Price;
+      existingProduct.DiscountPrice = updatedProduct.DiscountPrice;
+      existingProduct.ReleaseDate = updatedProduct.ReleaseDate;
+
+      await dbContext.SaveChangesAsync();
 
       return Results.NoContent();
     });
 
     // Delete /products/1
-    group.MapDelete("/{id}", (int id) =>
+    group.MapDelete("/{id}", async (int id, ProductStoreContext dbContext) =>
     {
 
-      products.RemoveAll(product => product.Id == id);
+      await dbContext.Products.Where(product => product.Id == id).ExecuteDeleteAsync();
 
       return Results.NoContent();
     });

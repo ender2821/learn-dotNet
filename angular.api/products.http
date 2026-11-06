@@ -2,32 +2,36 @@ GET http://localhost:5283/products
 
 ###
 
-GET http://localhost:5283/products/5
+GET http://localhost:5283/products/2
 
 ###
 POST http://localhost:5283/products
 Content-Type: application/json
 
 {
-  "name": "Fujifilm XT30",
-  "description": "A compact mirrorless camera with excellent image quality.",
-  "categoryId": 1,
-  "price": 419.99,
-  "discountPrice": 414.99, 
+  "name": "XT1000 Gaming PC",
+  "description": "A high-performance gaming Desktop with the latest graphics card and processor.",
+  "categoryId": 2,
+  "price": 1419.99,
+  "discountPrice": null, 
   "releaseDate": "2024-06-01"
 }
 
 ###
-PUT http://localhost:5283/products/5
+PUT http://localhost:5283/products/2
 Content-Type: application/json
 
 {
-  "name": "Updated Product",
-  "description": "This is an updated product.",
-  "price": 29.99,
-  "discountPrice": 24.99, 
-  "releaseDate": "2024-07-01"
+"name": "XT1000 Gaming PC",
+  "description": "A high-performance gaming Desktop with the latest graphics card and processor.",
+  "categoryId": 2,
+  "price": 1450.99,
+  "discountPrice": null, 
+  "releaseDate": "2024-06-01"
 }
 
 ###
-DELETE http://localhost:5283/products/1
+DELETE http://localhost:5283/products/3
+
+###
+Get http://localhost:5283/categories
